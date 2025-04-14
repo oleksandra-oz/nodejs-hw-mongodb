@@ -11,11 +11,11 @@ export const setupServer = () => {
 
     app.use(cors());
     app.use(express.json());
-    // app.use(pino({
-    //     transport: {
-    //         target: "pino-pretty"
-    //     }
-    // }));
+    app.use(pino({
+        transport: {
+            target: "pino-pretty",
+        }
+    }));
 
     app.get("/contacts", async (req, res) => {
         const data = await getContacts();
@@ -26,9 +26,10 @@ export const setupServer = () => {
         });
     });
 
-    app.get("/contacts/:id", async (req, res) => {
-        const { id } = req.params;
-        const data = await getContactById();
+    app.get("/contacts/:contactId", async (req, res) => {
+        const { contactId } = req.params;
+        try {
+            const data = await getContactById();
 
         if (!data) {
             return res.status(404).json({
@@ -39,9 +40,14 @@ export const setupServer = () => {
 
         res.json({
             status:200,
-            message: `Successfully found contact with id ${id}`,
+            message: `Successfully found contact with id ${contactId}`,
             data,
         });
+        } catch (error) {
+            console.log(error);
+      throw error;
+        }
+        
     });
 
     app.use((req, res) => {
