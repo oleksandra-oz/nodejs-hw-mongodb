@@ -12,7 +12,7 @@ export const getContacts = async ({
 }) => {
   const skip = (page - 1) * perPage;
   const contactQuery = ContactCollection.find();
-  if (filter.contactType) {
+  if (filter.type) {
     contactQuery.where('contactType').equals(filter.type);
   }
   if (typeof filter.isFavourite === 'boolean') {
