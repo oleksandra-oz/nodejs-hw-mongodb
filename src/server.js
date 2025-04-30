@@ -1,31 +1,28 @@
 import express from 'express';
-import cors from "cors";
+import cors from 'cors';
 import { getEnvVar } from './utils/getEnvVar.js';
 // import { logger } from './middlewares/logger.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import contactsRouter from './routers/contacts.js';
-
+import authRouter from './routers/auth.js';
 
 export const setupServer = () => {
-    const app = express();
+  const app = express();
 
-    app.use(cors());
-    app.use(express.json());
-    // app.use(logger);
+  app.use(cors());
+  app.use(express.json());
+  // app.use(logger);
 
-    app.use("/contacts", contactsRouter);
+  app.use('/auth', authRouter);
 
-    app.use(notFoundHandler);
+  app.use('/contacts', contactsRouter);
 
-    app.use(errorHandler);
+  app.use(notFoundHandler);
 
-    const port = Number(getEnvVar("PORT", 3000));
+  app.use(errorHandler);
 
-    app.listen(port, () => console.log(`Server is running on ${port} port`));
+  const port = Number(getEnvVar('PORT', 3000));
+
+  app.listen(port, () => console.log(`Server is running on ${port} port`));
 };
-
-
-
-
-
