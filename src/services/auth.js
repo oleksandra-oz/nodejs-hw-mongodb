@@ -77,3 +77,5 @@ return SessionCollection.create({
   ...newSession,
 });
 };
+
+export const logoutUser = async sessionId => SessionCollection.deleteOne({_id:sessionId});
