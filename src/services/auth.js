@@ -8,6 +8,10 @@ import {
   accessTokenLifeTime,
 } from '../constants/auth.js';
 
+export const findSession = query => SessionCollection.findOne(query);;
+
+export const findUser = query => UserCollection.findOne(query);
+
 export const registerUser = async (payload) => {
   const { email, password } = payload;
   const user = await UserCollection.findOne({ email });
