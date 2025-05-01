@@ -26,6 +26,11 @@ const contactSchema = new Schema(
       default: typesList[0],
       required: true,
     },
+    userId:{
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref:"user",
+    }
   },
   { versionKey: false, timestamps: true },
 );

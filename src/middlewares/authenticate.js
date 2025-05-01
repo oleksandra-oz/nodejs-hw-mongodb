@@ -22,5 +22,7 @@ export const authenticate = async (req,res,next)=>{
     if(!user){
         return next(createHttpError(401, "User is not found"));
     }
+
+    req.user = user;
     next();
 };
