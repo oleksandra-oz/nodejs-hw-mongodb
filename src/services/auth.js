@@ -22,7 +22,12 @@ const createSession = () => {
   };
 };
 
-export const findSession = query => SessionCollection.findOne(query);
+export const findSession = async (query) => {
+  console.log('FindSession filter:', query); // Дебагування
+  const session = await SessionCollection.findOne(query);
+  console.log('Found session:', session); // Дебагування
+  return session;
+};
 
 export const findUser = query => UserCollection.findOne(query);
 
@@ -34,12 +39,13 @@ export const registerUser = async (payload) => {
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
-  return await UserCollection.create({ ...payload, password: hashPassword });
+  const newUser = await UserCollection.create({ ...payload, password: hashPassword });
+  return newUser;
 };
 
 export const loginUser = async (payload) => {
   const { email, password } = payload;
-  const user = await UserCollection.findOne({ email });
+  const user = await UserCollection.findOne({ email }).select('+password');
   if (!user) {
     throw createHttpError(401, 'Email or password are invalid');
   }
