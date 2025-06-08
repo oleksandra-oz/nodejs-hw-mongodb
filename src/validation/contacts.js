@@ -25,4 +25,4 @@ export const contactUpdateSchema = Joi.object({
     .min(3)
     .max(20)
     .valid(...typesList),
-});
+}).min(1);

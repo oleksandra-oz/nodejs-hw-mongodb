@@ -40,21 +40,31 @@ export const getContacts = async ({
 };
 export const getContactById = (contactId, userId) =>
   ContactCollection.findOne({ _id: contactId,userId });
-export const addContact = (payload, userId) => ContactCollection.create(...payload, userId);
-export const updateContact = async (_id, userId, payload, options = {}) => {
-  const { upsert = false } = options;
-  const rawResult = await ContactCollection.findOneAndUpdate({ _id },userId, payload, {
-    new: true,
-    runValidators: true,
-    upsert,
-    includeResultMetadata: true,
-  });
+export const addContact = async (payload) => {
+  return await ContactCollection.create(payload);
+};
 
+export const updateContact = async (_id, payload, options = {}) => {
+  const { upsert = false } = options;
+  console.log('Update contact query:', { _id, userId: payload.userId }); // Дебагування
+  console.log('Update payload:', payload); // Дебагування
+  const rawResult = await ContactCollection.findOneAndUpdate(
+    { _id, userId: payload.userId },
+    { $set: payload },
+    {
+      new: true,
+      runValidators: true,
+      upsert,
+      includeResultMetadata: true,
+    }
+  );
+
+  console.log('Update result:', rawResult); // Дебагування
   if (!rawResult || !rawResult.value) return null;
 
   return {
     data: rawResult.value,
-    isNew: Boolean(rawResult.lastErrorObject.upserted),
+    isNew: Boolean(rawResult?.lastErrorObject?.upserted),
   };
 };
 

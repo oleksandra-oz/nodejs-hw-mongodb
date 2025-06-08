@@ -10,6 +10,7 @@ import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from './../utils/parseSortParams.js';
 import { contactSortFields } from '../db/models/Contacts.js';
 import { parseContactFilterParams } from '../utils/filters/parseContactFilterParams.js';
+import mongoose from 'mongoose';
 
 export const getContactsController = async (req, res) => {
   const paginationParams = parsePaginationParams(req.query);
@@ -55,7 +56,18 @@ export const addContactController = async (req, res) => {
 
 export const upsertContactController = async (req, res) => {
   const { id } = req.params;
-  const { data, isNew } = await updateContact(id, req.body, { upsert: true });
+  if (!mongoose.isValidObjectId(id)) {
+    throw createHttpError(400, 'Invalid contact ID');
+  }
+  if (!req.user?._id) {
+    throw createHttpError(401, 'User not authenticated');
+  }
+  if (!req.body || Object.keys(req.body).length === 0) {
+    throw createHttpError(400, 'Request body is empty');
+  }
+
+  const payload = { ...req.body, userId: req.user._id };
+  const { data, isNew } = await updateContact(id, payload, { upsert: true });
   const status = isNew ? 201 : 200;
   res.status(status).json({
     status,
@@ -66,7 +78,18 @@ export const upsertContactController = async (req, res) => {
 
 export const patchContactController = async (req, res) => {
   const { id } = req.params;
-  const result = await updateContact(id, req.body);
+  if (!mongoose.isValidObjectId(id)) {
+    throw createHttpError(400, 'Invalid contact ID');
+  }
+  if (!req.user?._id) {
+    throw createHttpError(401, 'User not authenticated');
+  }
+  if (!req.body || Object.keys(req.body).length === 0) {
+    throw createHttpError(400, 'Request body is empty');
+  }
+
+  const payload = { ...req.body, userId: req.user._id };
+  const result = await updateContact(id, payload);
 
   if (!result) {
     throw createHttpError(404, 'Contact not found');
