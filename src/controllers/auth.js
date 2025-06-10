@@ -14,11 +14,13 @@ const setupSession = (res,session)=>{
 
 export const registerController = async (req, res) => {
   const user = await registerUser(req.body);
-
+  console.log('Raw user from registerUser:', user.toObject()); // Дебагування
+  const { password, ...safeUser } = user.toObject(); // Явно виключаємо password
+  console.log('Safe user for response:', safeUser); // Дебагування
   res.status(201).json({
     status: 201,
     message: 'Successfully registered a user!',
-    data: user,
+    data: safeUser,
   });
 };
 

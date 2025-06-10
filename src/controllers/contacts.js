@@ -31,9 +31,19 @@ export const getContactsController = async (req, res) => {
 
 export const getContactByIdController = async (req, res) => {
   const { contactId } = req.params;
-  const data = await getContactById(contactId);
+  const userId = req.user._id;
+  console.log('GET contact query:', { contactId, userId }); // Дебагування
+  if (!mongoose.isValidObjectId(contactId)) {
+    throw createHttpError(400, 'Invalid contact ID');
+  }
+  if (!userId) {
+    throw createHttpError(401, 'User not authenticated');
+  }
+
+  const data = await getContactById(contactId, userId);
 
   if (!data) {
+    console.log('Contact not found for:', { contactId, userId }); // Дебагування
     throw createHttpError(404, 'Contact not found');
   }
 
@@ -103,8 +113,18 @@ export const patchContactController = async (req, res) => {
 
 export const deleteContactController = async (req, res) => {
   const { id } = req.params;
-  const data = await deleteContactById(id);
+  const userId = req.user._id;
+  console.log('DELETE contact query:', { id, userId }); // Дебагування
+  if (!mongoose.isValidObjectId(id)) {
+    throw createHttpError(400, 'Invalid contact ID');
+  }
+  if (!userId) {
+    throw createHttpError(401, 'User not authenticated');
+  }
+
+  const data = await deleteContactById(id, userId);
   if (!data) {
+    console.log('Contact not found for:', { id, userId }); // Дебагування
     throw createHttpError(404, 'Contact not found');
   }
   res.status(204).send();
