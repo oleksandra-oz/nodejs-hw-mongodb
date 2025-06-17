@@ -1,3 +1,4 @@
+import path from "node:path"
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -8,11 +9,11 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import contactsRouter from './routers/contacts.js';
 import authRouter from './routers/auth.js';
 
-
 export const setupServer = () => {
   const app = express();
 
   app.use(cors());
+  app.use('/avatars', express.static(path.resolve("src", "uploads", "avatars")));
   app.use(cookieParser());
   app.use(express.json());
   // app.use(logger);

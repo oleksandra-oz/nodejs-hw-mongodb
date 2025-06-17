@@ -15,6 +15,7 @@ import {
   contactUpdateSchema,
 } from '../validation/contacts.js';
 import { isValidId } from '../middlewares/isValidId.js';
+import { upload } from '../middlewares/upload.js';
 
 const contactsRouter = Router();
 contactsRouter.use(authenticate);
@@ -29,6 +30,7 @@ contactsRouter.get(
 
 contactsRouter.post(
   '/',
+  upload.single("avatar"), 
   validateBody(contactAddSchema),
   ctrlWrapper(addContactController),
 );

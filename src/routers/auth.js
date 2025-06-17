@@ -4,6 +4,7 @@ import { authRegisterSchema, authLoginSchema, requestResetPasswordSchema, resetP
 import { validateBody } from './../utils/validateBody.js';
 import { registerController, loginController, refreshController, logoutController, requestResetPasswordController, resetPasswordController } from '../controllers/auth.js';
 
+
 const authRouter = Router();
 
 authRouter.post(

@@ -26,11 +26,16 @@ const contactSchema = new Schema(
       default: typesList[0],
       required: true,
     },
-    userId:{
+    userId: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref:"user",
-    }
+      ref: 'user',
+    },
+    avatar: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
   { versionKey: false, timestamps: true },
 );

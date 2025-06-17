@@ -1,3 +1,6 @@
+import * as fs from "node:fs/promises";
+import path from "node:path";
+
 import {
   getContacts,
   getContactById,
@@ -55,8 +58,11 @@ export const getContactByIdController = async (req, res) => {
 };
 
 export const addContactController = async (req, res) => {
+
+await fs.rename(req.file.path, path.resolve("src", "uploads", "avatars", req.file.filename))
+
   const {_id:userId}= req.user;
-  const data = await addContact({...req.body, userId});
+  const data = await addContact({...req.body, userId, avatar: req.file.filename});
   res.status(201).json({
     status: 201,
     message: 'Successfully created a contact!',
