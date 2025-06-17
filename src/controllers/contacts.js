@@ -1,6 +1,6 @@
-import * as fs from "node:fs/promises";
-import path from "node:path";
-
+import * as fs from 'node:fs/promises';
+import path from 'node:path';
+import { uploadToCloudinary } from '../utils/uploadToCloudinary.js';
 import {
   getContacts,
   getContactById,
@@ -14,6 +14,7 @@ import { parseSortParams } from './../utils/parseSortParams.js';
 import { contactSortFields } from '../db/models/Contacts.js';
 import { parseContactFilterParams } from '../utils/filters/parseContactFilterParams.js';
 import mongoose from 'mongoose';
+import { getEnvVar } from '../utils/getEnvVar.js';
 
 export const getContactsController = async (req, res) => {
   const paginationParams = parsePaginationParams(req.query);
@@ -58,11 +59,28 @@ export const getContactByIdController = async (req, res) => {
 };
 
 export const addContactController = async (req, res) => {
+  let avatar = null;
 
-await fs.rename(req.file.path, path.resolve("src", "uploads", "avatars", req.file.filename))
+  if (getEnvVar('UPLOAD_TO_CLOUDINARY') == 'true') {
+    const result = await uploadToCloudinary(req.file.path);
+    await fs.unlink(req.file.path);
 
-  const {_id:userId}= req.user;
-  const data = await addContact({...req.body, userId, avatar: req.file.filename});
+    avatar = result.secure_url;
+  } else {
+    await fs.rename(
+      req.file.path,
+      path.resolve('src', 'uploads', 'avatars', req.file.filename),
+    );
+
+    avatar = `http://localhost:3000/avatars/${req.file.filename}`;
+  }
+
+  const { _id: userId } = req.user;
+  const data = await addContact({
+    ...req.body,
+    userId,
+    avatar,
+  });
   res.status(201).json({
     status: 201,
     message: 'Successfully created a contact!',
