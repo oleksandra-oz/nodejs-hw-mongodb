@@ -50,6 +50,7 @@ export const contactSortFields = [
   'email',
   'isFavourite',
   'contactType',
+  'photo'
 ];
 
 const ContactCollection = model('contacts', contactSchema);
