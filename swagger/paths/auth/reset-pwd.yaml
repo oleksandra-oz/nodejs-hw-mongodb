@@ -1,0 +1,21 @@
+post:
+  tags:
+    - Auth
+  summary: Reset password
+  operationId: resetPassword
+  description: Resets the user password using a reset token.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas.yaml#/ResetPasswordRequest'
+  responses:
+    '200':
+      description: Password reset successfully
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas.yaml#/EmptyResponse'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'

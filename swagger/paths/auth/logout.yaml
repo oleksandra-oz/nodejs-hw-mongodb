@@ -1,0 +1,11 @@
+post:
+  tags:
+    - Auth
+  summary: Logout a user
+  operationId: logoutUser
+  description: Logs out the user and clears session cookies.
+  responses:
+    '204':
+      description: User logged out successfully
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'

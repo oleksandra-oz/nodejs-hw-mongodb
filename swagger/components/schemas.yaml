@@ -1,0 +1,293 @@
+Contact:
+  type: object
+  required:
+    - _id
+    - name
+    - phoneNumber
+    - contactType
+    - userId
+  properties:
+    _id:
+      type: string
+      format: ObjectId
+      description: Unique identifier of the contact
+    name:
+      type: string
+      minLength: 3
+      maxLength: 20
+      description: Name of the contact
+    phoneNumber:
+      type: string
+      minLength: 3
+      maxLength: 20
+      description: Phone number of the contact
+    email:
+      type: string
+      format: email
+      description: Email address of the contact
+    isFavourite:
+      type: boolean
+      default: false
+      description: Whether the contact is marked as favorite
+    contactType:
+      type: string
+      enum: [personal, work, home]
+      description: Type of contact
+    userId:
+      type: string
+      format: ObjectId
+      description: ID of the user who owns the contact
+    photo:
+      type: string
+      format: uri
+      description: URL of the contact's photo
+    createdAt:
+      type: string
+      format: date-time
+      description: Creation timestamp
+    updatedAt:
+      type: string
+      format: date-time
+      description: Last update timestamp
+
+ContactCreateRequest:
+  type: object
+  required:
+    - name
+    - phoneNumber
+    - contactType
+  properties:
+    name:
+      type: string
+      minLength: 3
+      maxLength: 20
+    phoneNumber:
+      type: string
+      minLength: 3
+      maxLength: 20
+    email:
+      type: string
+      format: email
+    isFavourite:
+      type: boolean
+    contactType:
+      type: string
+      enum: [personal, work, home]
+    photo:
+      type: string
+      format: binary
+      description: Photo file to upload
+
+ContactUpdateRequest:
+  type: object
+  properties:
+    name:
+      type: string
+      minLength: 3
+      maxLength: 20
+    phoneNumber:
+      type: string
+      minLength: 3
+      maxLength: 20
+    email:
+      type: string
+      format: email
+    isFavourite:
+      type: boolean
+    contactType:
+      type: string
+      enum: [personal, work, home]
+    photo:
+      type: string
+      format: binary
+      description: Photo file to upload
+
+ContactResponse:
+  type: object
+  required:
+    - status
+    - message
+    - data
+  properties:
+    status:
+      type: integer
+      example: 200
+    message:
+      type: string
+      example: Successfully found contact with id {contactId}
+    data:
+      $ref: '#/Contact'
+
+ContactsListResponse:
+  type: object
+  required:
+    - status
+    - message
+    - data
+  properties:
+    status:
+      type: integer
+      example: 200
+    message:
+      type: string
+      example: Successfully found contacts!
+    data:
+      type: object
+      required:
+        - data
+        - page
+        - perPage
+        - totalItems
+        - totalPages
+        - hasPreviousPage
+        - hasNextPage
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/Contact'
+        page:
+          type: integer
+          example: 1
+        perPage:
+          type: integer
+          example: 10
+        totalItems:
+          type: integer
+          example: 50
+        totalPages:
+          type: integer
+          example: 5
+        hasPreviousPage:
+          type: boolean
+          example: false
+        hasNextPage:
+          type: boolean
+          example: true
+
+User:
+  type: object
+  required:
+    - _id
+    - name
+    - email
+  properties:
+    _id:
+      type: string
+      format: ObjectId
+    name:
+      type: string
+    email:
+      type: string
+      format: email
+    createdAt:
+      type: string
+      format: date-time
+    updatedAt:
+      type: string
+      format: date-time
+
+RegisterRequest:
+  type: object
+  required:
+    - name
+    - email
+    - password
+  properties:
+    name:
+      type: string
+    email:
+      type: string
+      format: email
+    password:
+      type: string
+      minLength: 6
+
+LoginRequest:
+  type: object
+  required:
+    - email
+    - password
+  properties:
+    email:
+      type: string
+      format: email
+    password:
+      type: string
+      minLength: 6
+
+LoginResponse:
+  type: object
+  required:
+    - status
+    - message
+    - data
+  properties:
+    status:
+      type: integer
+      example: 200
+    message:
+      type: string
+      example: Successfully logged in an user!
+    data:
+      type: object
+      required:
+        - accessToken
+      properties:
+        accessToken:
+          type: string
+          description: JWT access token
+
+UserResponse:
+  type: object
+  required:
+    - status
+    - message
+    - data
+  properties:
+    status:
+      type: integer
+      example: 201
+    message:
+      type: string
+      example: Successfully registered a user!
+    data:
+      $ref: '#/User'
+
+RequestResetPasswordRequest:
+  type: object
+  required:
+    - email
+  properties:
+    email:
+      type: string
+      format: email
+
+ResetPasswordRequest:
+  type: object
+  required:
+    - password
+    - token
+  properties:
+    password:
+      type: string
+      minLength: 6
+    token:
+      type: string
+
+EmptyResponse:
+  type: object
+  required:
+    - status
+    - message
+    - data
+  properties:
+    status:
+      type: integer
+      example: 200
+    message:
+      type: string
+      example: Reset password email has been successfully sent.
+    data:
+      type: object
+      example: {}
