@@ -476,7 +476,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "../../../components/schemas.yaml#/RequestResetPasswordRequest"
+                  "$ref": "../../components/schemas.yaml#/RequestResetPasswordRequest"
                 }
               }
             }
@@ -487,13 +487,13 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "../../../components/schemas.yaml#/EmptyResponse"
+                    "$ref": "../../components/schemas.yaml#/EmptyResponse"
                   }
                 }
               }
             },
             "400": {
-              "$ref": "../../../components/responses.yaml#/BadRequest"
+              "$ref": "../../components/responses.yaml#/BadRequest"
             }
           }
         }
