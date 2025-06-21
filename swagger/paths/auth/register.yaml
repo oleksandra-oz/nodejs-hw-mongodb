@@ -9,13 +9,13 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas.yaml#/RegisterRequest'
+          $ref: '../../components/schemas.yaml#/RegisterRequest'
   responses:
     '201':
       description: User registered successfully
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas.yaml#/UserResponse'
+            $ref: '../../components/schemas.yaml#/UserResponse'
     '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
+      $ref: '../../components/responses.yaml#/BadRequest'

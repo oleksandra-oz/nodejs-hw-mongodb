@@ -128,13 +128,13 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "../../../components/schemas.yaml#/ContactsListResponse"
+                    "$ref": "../../components/schemas.yaml#/ContactsListResponse"
                   }
                 }
               }
             },
             "401": {
-              "$ref": "../../../components/responses.yaml#/Unauthorized"
+              "$ref": "../../components/responses.yaml#/Unauthorized"
             }
           }
         }
@@ -352,7 +352,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "../../../components/schemas.yaml#/RegisterRequest"
+                  "$ref": "../../components/schemas.yaml#/RegisterRequest"
                 }
               }
             }
@@ -363,13 +363,13 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "../../../components/schemas.yaml#/UserResponse"
+                    "$ref": "../../components/schemas.yaml#/UserResponse"
                   }
                 }
               }
             },
             "400": {
-              "$ref": "../../../components/responses.yaml#/BadRequest"
+              "$ref": "../../components/responses.yaml#/BadRequest"
             }
           }
         }
