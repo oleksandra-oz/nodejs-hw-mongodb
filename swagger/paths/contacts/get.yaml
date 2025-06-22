@@ -1,64 +1,63 @@
-get:
-  tags:
-    - Contacts
-  summary: Get a list of contacts
-  operationId: getContacts
-  description: Retrieves a paginated list of contacts for the authenticated user with optional filtering and sorting.
-  security:
-    - bearerAuth: []
-  parameters:
-    - name: page
-      in: query
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-      description: Page number for pagination
-    - name: perPage
-      in: query
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 10
-      description: Number of contacts per page
-    - name: sortBy
-      in: query
-      required: false
-      schema:
-        type: string
-        enum: [name, phoneNumber, email, isFavourite, contactType, photo]
-        default: _id
-      description: Field to sort by
-    - name: sortOrder
-      in: query
-      required: false
-      schema:
-        type: string
-        enum: [asc, desc]
-        default: asc
-      description: Sort order
-    - name: type
-      in: query
-      required: false
-      schema:
-        type: string
-        enum: [personal, work, home]
-      description: Filter by contact type
-    - name: isFavourite
-      in: query
-      required: false
-      schema:
-        type: boolean
-      description: Filter by favorite status
-  responses:
-    '200':
-      description: Contacts retrieved successfully
-      content:
-        application/json:
-          schema:
-            $ref: '../../components/schemas.yaml#/ContactsListResponse'
-    '401':
-      $ref: '../../components/responses.yaml#/Unauthorized'
+tags:
+  - Contacts
+summary: Get a list of contacts
+operationId: getContacts
+description: Retrieves a paginated list of contacts for the authenticated user with optional filtering and sorting.
+security:
+  - bearerAuth: []
+parameters:
+  - name: page
+    in: query
+    required: false
+    schema:
+      type: integer
+      minimum: 1
+      default: 1
+    description: Page number for pagination
+  - name: perPage
+    in: query
+    required: false
+    schema:
+      type: integer
+      minimum: 1
+      maximum: 100
+      default: 10
+    description: Number of contacts per page
+  - name: sortBy
+    in: query
+    required: false
+    schema:
+      type: string
+      enum: [name, phoneNumber, email, isFavourite, contactType, photo]
+      default: _id
+    description: Field to sort by
+  - name: sortOrder
+    in: query
+    required: false
+    schema:
+      type: string
+      enum: [asc, desc]
+      default: asc
+    description: Sort order
+  - name: type
+    in: query
+    required: false
+    schema:
+      type: string
+      enum: [personal, work, home]
+    description: Filter by contact type
+  - name: isFavourite
+    in: query
+    required: false
+    schema:
+      type: boolean
+    description: Filter by favorite status
+responses:
+  '200':
+    description: Contacts retrieved successfully
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas.yaml#/ContactsListResponse'
+  '401':
+    $ref: '../../components/responses.yaml#/Unauthorized'

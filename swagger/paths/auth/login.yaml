@@ -1,23 +1,22 @@
-post:
-  tags:
-    - Auth
-  summary: Login a user
-  operationId: loginUser
-  description: Authenticates a user and returns an access token with session cookies.
-  requestBody:
-    required: true
+tags:
+  - Auth
+summary: Login a user
+operationId: loginUser
+description: Authenticates a user and returns an access token with session cookies.
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '../../../components/schemas.yaml#/LoginRequest'
+responses:
+  '200':
+    description: User logged in successfully
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas.yaml#/LoginRequest'
-  responses:
-    '200':
-      description: User logged in successfully
-      content:
-        application/json:
-          schema:
-            $ref: '../../../components/schemas.yaml#/LoginResponse'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
+          $ref: '../../../components/schemas.yaml#/LoginResponse'
+  '400':
+    $ref: '../../../components/responses.yaml#/BadRequest'
+  '401':
+    $ref: '../../../components/responses.yaml#/Unauthorized'

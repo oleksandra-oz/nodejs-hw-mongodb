@@ -1,37 +1,36 @@
-patch:
-  tags:
-    - Contacts
-  summary: Update a contact
-  operationId: updateContact
-  description: Partially updates a contact by ID for the authenticated user with an optional photo upload.
-  security:
-    - bearerAuth: []
-  parameters:
-    - name: contactId
-      in: path
-      required: true
-      schema:
-        type: string
-        format: ObjectId
-      description: The ID of the contact to update
-  requestBody:
+tags:
+  - Contacts
+summary: Update a contact
+operationId: updateContact
+description: Partially updates a contact by ID for the authenticated user with an optional photo upload.
+security:
+  - bearerAuth: []
+parameters:
+  - name: contactId
+    in: path
     required: true
+    schema:
+      type: string
+      format: ObjectId
+    description: The ID of the contact to update
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        $ref: '../../../components/schemas.yaml#/ContactUpdateRequest'
+responses:
+  '200':
+    description: Contact updated successfully
     content:
-      multipart/form-data:
+      application/json:
         schema:
-          $ref: '../../../components/schemas.yaml#/ContactUpdateRequest'
-  responses:
-    '200':
-      description: Contact updated successfully
-      content:
-        application/json:
-          schema:
-            $ref: '../../../components/schemas.yaml#/ContactResponse'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
-    '500':
-      $ref: '../../../components/responses.yaml#/ServerError'
+          $ref: '../../../components/schemas.yaml#/ContactResponse'
+  '400':
+    $ref: '../../../components/responses.yaml#/BadRequest'
+  '401':
+    $ref: '../../../components/responses.yaml#/Unauthorized'
+  '404':
+    $ref: '../../../components/responses.yaml#/NotFound'
+  '500':
+    $ref: '../../../components/responses.yaml#/ServerError'

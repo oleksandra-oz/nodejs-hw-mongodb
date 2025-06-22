@@ -1,21 +1,20 @@
-post:
-  tags:
-    - Auth
-  summary: Register a new user
-  operationId: registerUser
-  description: Registers a new user with name, email, and password.
-  requestBody:
-    required: true
+tags:
+  - Auth
+summary: Register a new user
+operationId: registerUser
+description: Registers a new user with name, email, and password.
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '../../components/schemas.yaml#/RegisterRequest'
+responses:
+  '201':
+    description: User registered successfully
     content:
       application/json:
         schema:
-          $ref: '../../components/schemas.yaml#/RegisterRequest'
-  responses:
-    '201':
-      description: User registered successfully
-      content:
-        application/json:
-          schema:
-            $ref: '../../components/schemas.yaml#/UserResponse'
-    '400':
-      $ref: '../../components/responses.yaml#/BadRequest'
+          $ref: '../../components/schemas.yaml#/UserResponse'
+  '400':
+    $ref: '../../components/responses.yaml#/BadRequest'
