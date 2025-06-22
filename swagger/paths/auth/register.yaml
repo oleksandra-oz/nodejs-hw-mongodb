@@ -3,6 +3,8 @@ tags:
 summary: Register a new user
 operationId: registerUser
 description: Registers a new user with name, email, and password.
+security:
+  - bearerAuth: []
 requestBody:
   required: true
   content:
@@ -11,7 +13,7 @@ requestBody:
         $ref: '../../components/schemas.yaml#/RegisterRequest'
 responses:
   '201':
-    description: User registered successfully
+    description: User logged in successfully
     content:
       application/json:
         schema:

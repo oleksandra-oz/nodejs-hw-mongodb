@@ -10,17 +10,17 @@ requestBody:
   content:
     multipart/form-data:
       schema:
-        $ref: '../../../components/schemas.yaml#/ContactCreateRequest'
+        $ref: '../../components/schemas.yaml#ContactCreateRequest'
 responses:
   '201':
     description: Contact created successfully
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas.yaml#/ContactResponse'
+          $ref: '../../components/schemas.yaml#/ContactResponse'
   '400':
-    $ref: '../../../components/responses.yaml#/BadRequest'
+    $ref: '../../components/responses.yaml#/BadRequest'
   '401':
-    $ref: '../../../components/responses.yaml#/Unauthorized'
+    $ref: '../../components/responses.yaml#/Unauthorized'
   '500':
-    $ref: '../../../components/responses.yaml#/ServerError'
+    $ref: '../../components/responses.yaml#/ServerError'
