@@ -10,7 +10,7 @@ requestBody:
   content:
     multipart/form-data:
       schema:
-        $ref: '../../components/schemas.yaml#ContactCreateRequest'
+        $ref: '../../components/schemas.yaml#/ContactCreateRequest'
 responses:
   '201':
     description: Contact created successfully
