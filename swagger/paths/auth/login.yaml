@@ -15,7 +15,7 @@ responses:
   '200':
     description: User logged in successfully
     content:
-      application/json:
+      application/json:  
         schema:
           $ref: '../../components/schemas.yaml#/LoginResponse'
   '400':

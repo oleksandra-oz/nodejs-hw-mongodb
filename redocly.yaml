@@ -6,11 +6,6 @@ extends:
   - recommended
 rules:
   no-unused-components: error
-bundle:
-  output:
-    file: docs/swagger.json
-  input:
-    - docs/openapi.yaml
 theme:
   htmlTemplate: ./docs/index.html
   colors:
