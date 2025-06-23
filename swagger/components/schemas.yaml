@@ -50,6 +50,34 @@ Contact:
       format: date-time
       description: Last update timestamp
 
+ContactCreateRequest:
+  type: object
+  required:
+    - name
+    - phoneNumber
+    - contactType
+  properties:
+    name:
+      type: string
+      minLength: 3
+      maxLength: 20
+    phoneNumber:
+      type: string
+      minLength: 3
+      maxLength: 20
+    email:
+      type: string
+      format: email
+    isFavourite:
+      type: boolean
+    contactType:
+      type: string
+      enum: [personal, work, home]
+    photo:
+      type: string
+      format: binary
+      description: Photo file to upload
+
 ContactUpdateRequest:
   type: object
   properties:
